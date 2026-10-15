@@ -1,0 +1,163 @@
+/* Section 8: Admission (Tuyển sinh VB2) */
+.admission-section {
+  background-color: var(--color-bg-page);
+  position: relative;
+}
+
+.admission-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 2.25rem;
+  align-items: stretch;
+}
+
+/* Left Card: Specs Table */
+.admission-info-card {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.admission-card-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admission-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.admission-item {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.95rem;
+}
+
+.admission-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.admission-label {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.admission-value {
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.admission-note-box {
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.25rem;
+  font-size: 0.85rem;
+  color: #92400E;
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+.admission-note-box svg {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+/* Right Card: Action & Consultation (Optimized to prevent empty space) */
+.admission-action-card {
+  background: linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.admission-action-desc {
+  font-size: 0.975rem;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+  margin-bottom: 1.75rem;
+}
+
+.admission-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 2rem;
+}
+
+.admission-buttons .btn {
+  width: 100%;
+  padding: 0.9rem 1.5rem;
+  justify-content: center;
+}
+
+/* Steps checklist to balance the layout & eliminate empty space */
+.admission-quick-steps {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.admission-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.admission-step-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(30, 64, 175, 0.1);
+  color: var(--color-secondary);
+  font-weight: 800;
+  font-size: 0.775rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+@media (max-width: 960px) {
+  .admission-grid {
+    grid-template-columns: 1fr;
+  }
+  .admission-item {
+    grid-template-columns: 140px 1fr;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .admission-item {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+}

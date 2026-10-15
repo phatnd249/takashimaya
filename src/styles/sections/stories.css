@@ -1,0 +1,137 @@
+/* Section 3: Câu chuyện từ tụi mình */
+.stories-section {
+  background-color: var(--color-bg-page);
+  position: relative;
+}
+
+.stories-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 2.25rem;
+  align-items: stretch;
+}
+
+/* Left: Featured Card */
+.story-featured-card {
+  position: relative;
+  background: var(--color-primary);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 460px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: var(--transition-smooth);
+}
+
+.story-featured-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+.story-featured-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.story-featured-media img,
+.story-featured-media .img-placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.story-featured-card-overlay {
+  position: relative;
+  z-index: 2;
+  padding: 3rem 2.25rem 2.25rem 2.25rem;
+  background: linear-gradient(to top, rgba(10, 25, 49, 0.95) 0%, rgba(10, 25, 49, 0.75) 55%, transparent 100%);
+  color: #FFFFFF;
+}
+
+.story-featured-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--color-accent);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.65rem;
+}
+
+.story-featured-title {
+  font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+  font-weight: 800;
+  line-height: 1.28;
+  color: #FFFFFF;
+  margin-bottom: 0.85rem;
+}
+
+.story-featured-desc {
+  font-size: 0.95rem;
+  color: #CBD5E1;
+  line-height: 1.6;
+}
+
+/* Right: 3 Stacked Cards */
+.stories-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  justify-content: space-between;
+}
+
+.story-mini-card {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.6rem 2rem;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+}
+
+.story-mini-card:hover {
+  transform: translateX(4px);
+  border-color: #CBD5E1;
+  box-shadow: var(--shadow-md);
+}
+
+.story-mini-meta {
+  font-size: 0.775rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #B45309;
+  margin-bottom: 0.5rem;
+}
+
+.story-mini-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  line-height: 1.35;
+  margin-bottom: 0.4rem;
+}
+
+.story-mini-desc {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+}
+
+@media (max-width: 960px) {
+  .stories-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+  .story-featured-card {
+    min-height: 380px;
+  }
+}

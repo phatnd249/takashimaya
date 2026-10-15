@@ -1,0 +1,54 @@
+/* Section 10: Call to Action Banner */
+.cta-banner-section {
+  padding-bottom: 5rem;
+  background-color: var(--color-bg-page);
+}
+
+.cta-banner-card {
+  position: relative;
+  background: radial-gradient(circle at 90% 50%, rgba(30, 64, 175, 0.4) 0%, transparent 60%),
+              radial-gradient(circle at 10% 50%, rgba(245, 184, 56, 0.15) 0%, transparent 50%),
+              #0A1931;
+  border-radius: var(--radius-xl);
+  padding: 3.5rem 3rem;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  box-shadow: 0 20px 40px rgba(10, 25, 49, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.cta-banner-content {
+  max-width: 650px;
+}
+
+.cta-banner-title {
+  font-size: clamp(1.75rem, 3.2vw, 2.35rem);
+  font-weight: 800;
+  line-height: 1.25;
+  color: #FFFFFF;
+  margin-bottom: 0.75rem;
+}
+
+.cta-banner-desc {
+  font-size: 1rem;
+  color: #CBD5E1;
+  line-height: 1.6;
+}
+
+.cta-banner-action .btn {
+  padding: 0.95rem 2rem;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .cta-banner-card {
+    padding: 2.25rem 1.75rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
