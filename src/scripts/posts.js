@@ -210,7 +210,6 @@ export async function initPostsCarousel(containerSelector = '#posts-carousel-con
 
   const track = container.querySelector('.posts-marquee-track');
   const statusEl = container.querySelector('.posts-status-message');
-  const toggleBtn = container.querySelector('.btn-toggle-marquee');
 
   if (!track) return;
 
@@ -235,19 +234,6 @@ export async function initPostsCarousel(containerSelector = '#posts-carousel-con
       posts.forEach(post => {
         const cardEl = createPostCardElement(post, isClone);
         track.appendChild(cardEl);
-      });
-    }
-
-    // Pause/Play toggle button support
-    if (toggleBtn) {
-      let isPaused = false;
-      toggleBtn.addEventListener('click', () => {
-        isPaused = !isPaused;
-        track.classList.toggle('is-paused', isPaused);
-        toggleBtn.setAttribute('aria-pressed', isPaused ? 'true' : 'false');
-        toggleBtn.innerHTML = isPaused 
-          ? `<span aria-hidden="true">▶</span> Tiếp tục trôi`
-          : `<span aria-hidden="true">⏸</span> Tạm dừng`;
       });
     }
 
