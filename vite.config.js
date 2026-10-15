@@ -1,9 +1,8 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  // Sử dụng './' để đường dẫn tương đối hoạt động trơn tru trên mọi cấu hình GitHub Pages
-  // Hoặc ghi đè bằng biến môi trường VITE_BASE_PATH nếu cần đường dẫn tuyệt đối
-  base: process.env.VITE_BASE_PATH || '/takashimaya/',
+  // Sử dụng './' để đường dẫn tương đối hoạt động hoàn hảo trên cả domain riêng và GitHub Pages subpath
+  base: process.env.VITE_BASE_PATH || './',
   server: {
     port: 5173,
     open: false
