@@ -5,6 +5,7 @@
 
 export const CONFIG = {
   SITE_NAME: 'Chuyện Tụi Mình — Văn Bằng 2 Truyền Thông LHU',
+  PAGE_SOURCE: 'Văn bằng 2 - Truyền thông LHU',
   SITE_URL: import.meta.env.VITE_SITE_URL || 'https://username.github.io/Takashimaya/',
   
   // WordPress REST API

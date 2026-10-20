@@ -159,17 +159,9 @@ export function initConsultationModal() {
         `;
       }
 
-      // Tự động nhận diện nguồn landing page và UTM parameters nếu có
+      // Tự động gán nguồn landing page
       function getPageSourceInfo() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const utmSource = urlParams.get('utm_source');
-        const utmCampaign = urlParams.get('utm_campaign');
-        let sourceName = CONFIG.SITE_NAME || 'Chuyện Tụi Mình — VB2 Truyền Thông LHU';
-        if (utmSource) {
-          sourceName += ` | UTM: ${utmSource}`;
-          if (utmCampaign) sourceName += ` (${utmCampaign})`;
-        }
-        return sourceName;
+        return CONFIG.PAGE_SOURCE || 'Văn bằng 2 - Truyền thông LHU';
       }
 
       // Prepare Google Form Data
