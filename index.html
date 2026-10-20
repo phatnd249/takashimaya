@@ -533,7 +533,7 @@
       </div>
     </section>
 
-    <!-- Section 6: WordPress Posts Carousel (Mục 2B - Marquee tự trôi) -->
+    <!-- Section 6: WordPress Posts Carousel (Giới hạn trong container, tự động xoay tua) -->
     <section id="posts-section" class="posts-carousel-section section-py" aria-label="Bài viết mới nhất từ cổng thông tin">
       <div class="container">
         <div class="posts-carousel-header-wrap">
@@ -544,42 +544,65 @@
               Các bài viết thực tế được kết nối trực tiếp từ cổng nội dung sinh viên, mang đến góc nhìn chân thực về học tập và đời sống.
             </p>
           </div>
-
-        </div>
-      </div>
-
-      <!-- Marquee Wrapper -->
-      <div id="posts-carousel-container" class="posts-marquee-wrapper" aria-label="Danh sách bài viết tự trôi">
-        <div class="posts-marquee-track">
-          <!-- Skeleton Loading Placeholders -->
-          <div class="skeleton-card" aria-hidden="true">
-            <div class="skeleton skeleton-thumb"></div>
-            <div class="skeleton skeleton-meta"></div>
-            <div class="skeleton skeleton-title"></div>
-            <div class="skeleton skeleton-desc"></div>
-          </div>
-          <div class="skeleton-card" aria-hidden="true">
-            <div class="skeleton skeleton-thumb"></div>
-            <div class="skeleton skeleton-meta"></div>
-            <div class="skeleton skeleton-title"></div>
-            <div class="skeleton skeleton-desc"></div>
-          </div>
-          <div class="skeleton-card" aria-hidden="true">
-            <div class="skeleton skeleton-thumb"></div>
-            <div class="skeleton skeleton-meta"></div>
-            <div class="skeleton skeleton-title"></div>
-            <div class="skeleton skeleton-desc"></div>
-          </div>
-          <div class="skeleton-card" aria-hidden="true">
-            <div class="skeleton skeleton-thumb"></div>
-            <div class="skeleton skeleton-meta"></div>
-            <div class="skeleton skeleton-title"></div>
-            <div class="skeleton skeleton-desc"></div>
-          </div>
         </div>
 
-        <!-- Empty / Error Status message -->
-        <div class="posts-status-message" role="status" aria-live="polite"></div>
+        <!-- Slider Container (Bounded inside .container) -->
+        <div id="posts-carousel-container" class="posts-slider-wrapper" aria-label="Danh sách bài viết tự động xoay tua">
+          <div class="posts-slider-inner">
+            <!-- Prev Button -->
+            <button type="button" class="posts-nav-btn posts-nav-prev" aria-label="Xem bài viết trước">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+
+            <!-- Viewport -->
+            <div class="posts-slider-viewport">
+              <div class="posts-slider-track">
+                <!-- Skeleton Loading Placeholders (4 cards matching 4-column layout) -->
+                <div class="skeleton-card" aria-hidden="true">
+                  <div class="skeleton skeleton-thumb"></div>
+                  <div class="skeleton skeleton-meta"></div>
+                  <div class="skeleton skeleton-title"></div>
+                  <div class="skeleton skeleton-desc"></div>
+                </div>
+                <div class="skeleton-card" aria-hidden="true">
+                  <div class="skeleton skeleton-thumb"></div>
+                  <div class="skeleton skeleton-meta"></div>
+                  <div class="skeleton skeleton-title"></div>
+                  <div class="skeleton skeleton-desc"></div>
+                </div>
+                <div class="skeleton-card" aria-hidden="true">
+                  <div class="skeleton skeleton-thumb"></div>
+                  <div class="skeleton skeleton-meta"></div>
+                  <div class="skeleton skeleton-title"></div>
+                  <div class="skeleton skeleton-desc"></div>
+                </div>
+                <div class="skeleton-card" aria-hidden="true">
+                  <div class="skeleton skeleton-thumb"></div>
+                  <div class="skeleton skeleton-meta"></div>
+                  <div class="skeleton skeleton-title"></div>
+                  <div class="skeleton skeleton-desc"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Next Button -->
+            <button type="button" class="posts-nav-btn posts-nav-next" aria-label="Xem bài viết kế tiếp">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Empty / Error Status message -->
+          <div class="posts-status-message" role="status" aria-live="polite"></div>
+
+          <!-- Progress Bar Indicator (Image 2 style) -->
+          <div class="posts-progress-wrap" aria-hidden="true">
+            <div class="posts-progress-bar"></div>
+          </div>
+        </div>
       </div>
     </section>
 
