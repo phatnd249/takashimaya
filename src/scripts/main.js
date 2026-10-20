@@ -19,6 +19,7 @@ import '../styles/sections/faq.css';
 import '../styles/sections/cta-banner.css';
 import '../styles/sections/footer.css';
 import '../styles/sections/quick-nav.css';
+import '../styles/sections/modal.css';
 
 // Scripts
 import { initMobileMenu } from './menu.js';
@@ -26,6 +27,7 @@ import { initHeroSlider } from './slider.js';
 import { initAccordion } from './accordion.js';
 import { initQuickNav } from './quick-nav.js';
 import { initPostsCarousel } from './posts.js';
+import { initConsultationModal } from './modal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
@@ -33,4 +35,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initAccordion();
   initQuickNav();
   initPostsCarousel();
+  initConsultationModal();
 });
