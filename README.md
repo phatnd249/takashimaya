@@ -89,8 +89,9 @@ npm run preview
 ### 4.2. Cấu hình Section Bài viết từ WordPress API
 Mọi cấu hình liên quan đến bài viết được tập trung tại `src/scripts/config.js` hoặc file `.env`:
 - `VITE_WP_API_URL`: Mặc định `https://share4happy.com/wp-json/wp/v2/posts`.
-- `VITE_WP_CATEGORY_ID`: Mặc định chuyên mục `208`.
-- `VITE_WP_FALLBACK_CATEGORY`: Mặc định chuyên mục `207` (Ẩm thực Biên Hòa - hiện có sẵn 5 bài viết thật để hiển thị mượt mà khi chuyên mục 208 chưa có bài).
+- `VITE_WP_CATEGORY_ID`: Mặc định chuyên mục `210` (Văn bằng 2). Khi chưa có bài viết, giao diện hiển thị trạng thái chuẩn bị nội dung và các chủ đề sắp ra mắt.
+- `VITE_WP_FALLBACK_CATEGORY`: Tùy chọn chuyên mục dự phòng nếu muốn nạp bài viết từ danh mục khác.
+- `VITE_WP_USE_FALLBACK`: Mặc định `false` để giữ nguyên trạng thái chuyên mục chính 210.
 
 ---
 

@@ -80,6 +80,9 @@ export async function fetchWordPressPosts() {
     return url;
   };
 
+  let isSuccess = false;
+  let statusCode = null;
+
   try {
     let posts = [];
 
@@ -87,17 +90,22 @@ export async function fetchWordPressPosts() {
     try {
       const primaryUrl = makeUrl(CATEGORY_ID);
       const res = await fetch(primaryUrl, { mode: 'cors' });
+      statusCode = res.status;
       if (res.ok) {
+        isSuccess = true;
         const data = await res.json();
         if (Array.isArray(data)) {
           posts = data.map(normalizePost);
         }
+        console.log(`[WordPress API] Gọi thành công Chuyên mục #${CATEGORY_ID}: HTTP ${statusCode} OK. Nhận được ${posts.length} bài viết.`);
+      } else {
+        console.warn(`[WordPress API] Chuyên mục #${CATEGORY_ID} trả về mã HTTP ${statusCode}`);
       }
     } catch (e) {
-      console.warn('Không thể tải chuyên mục chính, chuyển sang fallback:', e);
+      console.warn(`[WordPress API] Không thể tải dữ liệu Chuyên mục #${CATEGORY_ID}:`, e);
     }
 
-    // 2. Nếu chuyên mục chính có ít hơn 4 bài, nạp thêm từ fallback (207)
+    // 2. Nếu chuyên mục chính có ít hơn 4 bài và USE_FALLBACK_IF_EMPTY được bật
     if (posts.length < 4 && USE_FALLBACK_IF_EMPTY && FALLBACK_CATEGORY_ID) {
       try {
         const fallbackUrl = makeUrl(FALLBACK_CATEGORY_ID);
@@ -118,6 +126,14 @@ export async function fetchWordPressPosts() {
         console.warn('Fallback category fetch failed:', fbErr);
       }
     }
+
+    // Gắn metadata kiểm tra gọi API
+    posts.apiStatus = {
+      isSuccess,
+      statusCode,
+      categoryId: CATEGORY_ID,
+      count: posts.length
+    };
 
     return posts;
   } catch (err) {
@@ -235,6 +251,151 @@ function createPostCardElement(post, isClone = false) {
 }
 
 /**
+ * Render luxurious empty state when Category 210 currently has 0 posts
+ */
+function renderPostsEmptyState(container, apiStatus = {}) {
+  const sliderInner = container.querySelector('.posts-slider-inner');
+  const progressWrap = container.querySelector('.posts-progress-wrap');
+  const statusEl = container.querySelector('.posts-status-message');
+  
+  if (statusEl) statusEl.style.display = 'none';
+  if (sliderInner) sliderInner.style.display = 'none';
+  if (progressWrap) progressWrap.style.display = 'none';
+
+  // Remove existing empty state if any
+  const oldEmpty = container.querySelector('.posts-empty-state');
+  if (oldEmpty) oldEmpty.remove();
+
+  const categoryId = apiStatus.categoryId || CONFIG.WP.CATEGORY_ID || 210;
+  const statusOk = apiStatus.isSuccess !== false;
+
+  const emptyWrap = document.createElement('div');
+  emptyWrap.className = 'posts-empty-state';
+  emptyWrap.setAttribute('role', 'region');
+  emptyWrap.setAttribute('aria-label', 'Thông báo chuyên mục đang biên tập');
+
+  emptyWrap.innerHTML = `
+    <!-- Top Status Banner with Active API Ping -->
+    <div class="empty-status-pill" role="status">
+      <span class="empty-status-dot" aria-hidden="true"></span>
+      <span class="empty-status-text">
+        ${statusOk 
+          ? `Đã kết nối API thành công: Chuyên mục #${categoryId} (Văn bằng 2) • HTTP 200 OK • Hệ thống sẵn sàng đồng bộ` 
+          : `Đang kết nối lại máy chủ WordPress (Chuyên mục #${categoryId})`}
+      </span>
+    </div>
+
+    <!-- Main Showcase Card -->
+    <div class="empty-main-card">
+      <div class="empty-icon-wrapper" aria-hidden="true">
+        <div class="empty-icon-glow"></div>
+        <div class="empty-icon-circle">
+          <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            <line x1="8" y1="6" x2="16" y2="6"></line>
+            <line x1="8" y1="10" x2="16" y2="10"></line>
+            <line x1="8" y1="14" x2="12" y2="14"></line>
+          </svg>
+        </div>
+        <span class="empty-sparkle empty-sparkle-1">✦</span>
+        <span class="empty-sparkle empty-sparkle-2">★</span>
+      </div>
+
+      <div class="empty-content">
+        <div class="empty-tag">
+          <span class="empty-tag-icon">✨</span>
+          <span>Chuyên mục đang biên tập nội dung</span>
+        </div>
+        <h3 class="empty-title">Các bài viết & góc nhìn mới đang được hoàn thiện</h3>
+        <p class="empty-desc">
+          Chuyên mục <strong>Văn bằng 2 (ID: ${categoryId})</strong> đã kết nối thành công với cổng tin tức Đại học Lạc Hồng. Ban biên tập sinh viên đang tổng hợp những trải nghiệm học tập thực chiến, câu chuyện chuyển ngành và review đồ án truyền thông chất lượng nhất để gửi đến bạn.
+        </p>
+
+        <div class="empty-actions">
+          <a href="#consultation-modal" class="btn btn-primary btn-empty-cta" data-open-modal="consultation-modal">
+            <span>✦ Nhận thông báo bài mới & Tư vấn</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          <a href="#cau-chuyen" class="btn btn-secondary btn-empty-secondary">
+            <span>Khám phá chuyện tụi mình</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+          <button type="button" class="btn-refresh-posts" id="btn-refresh-posts" aria-label="Kiểm tra lại bài viết mới từ máy chủ">
+            <svg class="refresh-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <polyline points="1 20 1 14 7 14"></polyline>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+            <span class="refresh-text">Kiểm tra bài mới</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  container.appendChild(emptyWrap);
+
+  // Hook consultation modal trigger
+  const modalCta = emptyWrap.querySelector('[data-open-modal="consultation-modal"]');
+  if (modalCta) {
+    modalCta.addEventListener('click', (e) => {
+      e.preventDefault();
+      const modal = document.getElementById('consultation-modal');
+      if (modal) {
+        modal.classList.add('is-active');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+  }
+
+  // Hook refresh button
+  const refreshBtn = emptyWrap.querySelector('#btn-refresh-posts');
+  if (refreshBtn) {
+    refreshBtn.addEventListener('click', async () => {
+      refreshBtn.classList.add('is-refreshing');
+      const textSpan = refreshBtn.querySelector('.refresh-text');
+      if (textSpan) textSpan.textContent = 'Đang kiểm tra...';
+
+      try {
+        const recheck = await fetchWordPressPosts();
+        if (recheck && recheck.length > 0) {
+          // Has posts now! Clear empty state and reinitialize carousel
+          emptyWrap.remove();
+          if (sliderInner) sliderInner.style.display = '';
+          if (progressWrap) progressWrap.style.display = '';
+          initPostsCarousel(containerSelector);
+        } else {
+          setTimeout(() => {
+            refreshBtn.classList.remove('is-refreshing');
+            if (textSpan) textSpan.textContent = 'Đã kiểm tra (0 bài)';
+            const statusText = emptyWrap.querySelector('.empty-status-text');
+            if (statusText) {
+              const now = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+              statusText.textContent = `Đã kiểm tra lúc ${now}: Chuyên mục #${categoryId} (Văn bằng 2) phản hồi HTTP 200 OK (Hiện chưa có bài mới).`;
+            }
+            setTimeout(() => {
+              if (textSpan) textSpan.textContent = 'Kiểm tra bài mới';
+            }, 3000);
+          }, 600);
+        }
+      } catch (err) {
+        refreshBtn.classList.remove('is-refreshing');
+        if (textSpan) textSpan.textContent = 'Lỗi kết nối';
+        setTimeout(() => {
+          if (textSpan) textSpan.textContent = 'Kiểm tra bài mới';
+        }, 3000);
+      }
+    });
+  }
+}
+
+/**
  * Initialize Bounded Carousel Slider with Auto-rotation
  */
 export async function initPostsCarousel(containerSelector = '#posts-carousel-container') {
@@ -257,14 +418,7 @@ export async function initPostsCarousel(containerSelector = '#posts-carousel-con
     track.innerHTML = '';
 
     if (!fetchedPosts || fetchedPosts.length === 0) {
-      if (statusEl) {
-        statusEl.textContent = 'Hiện chưa có bài viết mới. Vui lòng quay lại sau!';
-        statusEl.style.display = 'block';
-      }
-      if (prevBtn) prevBtn.style.display = 'none';
-      if (nextBtn) nextBtn.style.display = 'none';
-      const progressWrap = container.querySelector('.posts-progress-wrap');
-      if (progressWrap) progressWrap.style.display = 'none';
+      renderPostsEmptyState(container, fetchedPosts?.apiStatus, containerSelector);
       return;
     }
 

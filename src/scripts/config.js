@@ -11,11 +11,11 @@ export const CONFIG = {
   // WordPress REST API
   WP: {
     API_URL: import.meta.env.VITE_WP_API_URL || 'https://share4happy.com/wp-json/wp/v2/posts',
-    CATEGORY_ID: Number(import.meta.env.VITE_WP_CATEGORY_ID) || 208,
+    CATEGORY_ID: Number(import.meta.env.VITE_WP_CATEGORY_ID) || 210,
     PER_PAGE: Number(import.meta.env.VITE_WP_POSTS_PER_PAGE) || 10,
-    // Chuyên mục fallback (ví dụ 207 - Ẩm thực Biên Hòa) khi chuyên mục 208 hiện có 0 bài viết
-    FALLBACK_CATEGORY_ID: Number(import.meta.env.VITE_WP_FALLBACK_CATEGORY) || 207,
-    USE_FALLBACK_IF_EMPTY: true,
+    // Chuyên mục fallback (nếu cần chỉ định khi muốn nạp thêm)
+    FALLBACK_CATEGORY_ID: Number(import.meta.env.VITE_WP_FALLBACK_CATEGORY) || null,
+    USE_FALLBACK_IF_EMPTY: import.meta.env.VITE_WP_USE_FALLBACK === 'true',
   },
 
   // Carousel settings
